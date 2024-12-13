@@ -1,0 +1,176 @@
+:root {
+  --table-size-factor: 0.95;
+}
+
+.table {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  max-width: calc(min(min(100vh, 100vw) * var(--table-size-factor), 1280px));
+  max-height: calc(min(min(100vh, 100vw) * var(--table-size-factor), 1280px));
+  transform: rotate(-2deg);
+}
+
+.button {
+  position: relative;
+  font-size: 11px;
+  padding: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  aspect-ratio: 1;
+  color: black;
+  border-top: none;
+  border-left: none;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: white;
+  transition: background 1s;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+button:not(:disabled):after {
+  content: "";
+  background-color: #e6e6e6;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 800ms
+}
+
+button:not(:disabled):active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
+.buttonText {
+  height: auto;
+  line-height: 1.2em;
+  max-height: 4.8em; /* 4 lines * 1.2em line-height */
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.cellFree {
+  position: relative;
+}
+
+.cellFree::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  border-radius: 50%;
+  border: 2px solid #3d603b;
+}
+
+.cellChecked:not(.cellFree) {
+  text-decoration: line-through;
+  color: darkgrey;
+}
+
+.cellBingo:not(.cellFree) {
+  background-color: #E4FFE1;
+}
+
+.positionNumber {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 9px;
+  margin: 4px;
+}
+
+.bingoAnimation {
+  animation: scale-out-in, spin;
+  animation-duration: 3s;
+  pointer-events: none;
+}
+
+@keyframes scale-out-in {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.5;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(calc(5turn - 2deg));
+  }
+}
+
+@media (min-width: 480px) and (min-height: 480px) {
+  .button {
+    font-size: 14px;
+    padding: 4px;
+  }
+
+  .positionNumber {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 768px) and (min-height: 768px) {
+  :root {
+    --table-size-factor: 0.92;
+  }
+
+  .button {
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  .positionNumber {
+    font-size: 16px;
+  }
+
+  .cellFree::before {
+    border-width: 3px;
+  }
+}
+
+@media (min-width: 1024px) and (min-height: 1024px) {
+  :root {
+    --table-size-factor: 0.90;
+  }
+
+  .button {
+    font-size: 24px;
+    padding: 12px;
+  }
+
+  .positionNumber {
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion) {
+  .bingoAnimation {
+    animation: none;
+  }
+
+  .button,
+  .button:after {
+    transition: none !important;
+  }
+}
